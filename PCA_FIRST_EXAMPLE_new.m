@@ -54,14 +54,14 @@ for i = 1:N
 end
 
 % Zero out the eigenvectors beyond the required number k
-for i = k+1:m
-    for j = 1:length(M1)
-        VPC(j, i) = 0.0;
-    end
-end
+% for i = k+1:m
+%     for j = 1:length(M1)
+%         VPC(j, i) = 0.0;
+%     end
+% end
 
 % Retain only the necessary eigenvectors
-VPC_util = VPC;
+VPC_util = VPC(:,1:k);
 
 %pause % Pause execution to allow inspection of variables if needed
 
@@ -90,11 +90,10 @@ rec_X = pca_X * VPC_util'; % Reconstructed centered data
 
 % Add the mean back to the reconstructed data to obtain the final reconstructed data
 XX = zeros(size(X)); % Initialize reconstructed data matrix
-for i = 1:m
-    for j = 1:N
-        XX(j, i) = rec_X(j, i) + media(i);
-    end
+for i = 1:m    
+       XX(:, i) = rec_X(:, i) + media(i);
 end
+
 
 disp('Reconstructed data');
 XX
